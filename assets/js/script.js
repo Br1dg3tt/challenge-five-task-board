@@ -157,16 +157,40 @@ function handleAddTask(event) {
   }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event){
-
-}
-
-// Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {
-
-}
-
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {
-
-});
+function handleDeleteTask(event) {
+    const taskDeleteBtn = $(event.currentTarget);
+    const taskId = taskDeleteBtn.data("task-id");
+    console.log(taskId);
+  
+    const deletedTaskIndex = taskList.findIndex(
+      (task) => task.id === parseInt(taskId)
+    );
+    if (deletedTaskIndex !== -1) {
+      taskList.splice(deletedTaskIndex, 1);
+      localStorage.setItem("tasks", JSON.stringify(taskList));
+      renderTaskList();
+      taskDeleteBtn.closest(".task-card").remove();
+    }
+  }
+  
+  // Todo: create a function to handle dropping a task into a new status lane
+  function handleDrop(event, ui) {
+    const taskId = ui.draggable.data("task-id");
+    const dropLaneTarget = $(event.target).closest(".lane").attr("id");
+  
+    const droppedTask = taskList.find((task) => task.id === taskId);
+    droppedTask.status = dropLaneTarget;
+  
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    renderTaskList();
+  }
+  
+  // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
+  $(document).ready(function () {
+    renderTaskList();
+    $(".lane").droppable({
+      accept: ".task-card",
+      drop: handleDrop,
+    });
+    $("#newTaskForm").on("submit", handleAddTask);
+  });
