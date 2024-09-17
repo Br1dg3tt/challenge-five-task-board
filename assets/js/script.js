@@ -4,12 +4,30 @@ let nextId = JSON.parse(localStorage.getItem("nextId"));
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-
+return nextId++;
 }
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {
-
+    function createTaskCard(task) {
+        let deadline = dayjs(task.deadline);
+        let currentDate = dayjs();
+    // deadline
+        let dateRange = currentDate.diff(deadline, "day");
+        let taskDeadlineColor;
+      
+    // colors
+        if (task.status !== "done") {
+          if (dateRange > 0) {
+            taskDeadlineColor = "past-due";
+          } else if (dateRange > -4) {
+            taskDeadlineColor = "due-soon";
+          } else {
+            taskDeadlineColor = "on-track";
+          }
+        } else {
+          taskDeadlineColor = "on-track";
+        }
 }
 
 // Todo: create a function to render the task list and make cards draggable
