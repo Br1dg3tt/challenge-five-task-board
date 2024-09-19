@@ -86,8 +86,10 @@ function renderTaskList() {
   
     //
     for (let i = 0; i < taskList.length; i++) {
+      console.log("debug log", taskList[i])
       const currentTask = taskList[i];
       const currentCard = createTaskCard(currentTask);
+     
   
       //
       if (currentTask.status === "done") {
