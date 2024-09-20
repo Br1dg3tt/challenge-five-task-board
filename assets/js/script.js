@@ -1,8 +1,8 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 // B - Might want to set nextId to some sort of default value so it doesn't come up null and break.
 //let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
-let nextId = JSON.parse(localStorage.getItem("nextId"));
+let nextId = JSON.parse(localStorage.getItem("nextId")) || 1;
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
@@ -12,7 +12,6 @@ return nextId++;
 // Todo: create a function to create a task card
 // B - This createTaskCard function has the same function inside itself. I think that's just a typo/mistake. Remove the second one (Line 13)  
 function createTaskCard(task) {
-    function createTaskCard(task) {
         let deadline = dayjs(task.deadline);
         let currentDate = dayjs();
     // deadline
@@ -74,7 +73,6 @@ function createTaskCard(task) {
 
   return cardBox;
 }
-}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
@@ -86,7 +84,6 @@ function renderTaskList() {
     todoEl.empty();
     inprogressEl.empty();
     doneEl.empty();
-  ## 
     //
     for (let i = 0; i < taskList.length; i++) {
       console.log("debug log", taskList[i])
